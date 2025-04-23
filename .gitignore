@@ -1,0 +1,42 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+app/build/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Gradle wrapper logs and temporary files
+gradle/wrapper/gradle-wrapper.jar
+*.log
+
+# Ignore configuration cache
+.gradle/configuration-cache/
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+*.orig
+
+# Ignore dependency caches (can be regenerated)
+.gradle/
+.gradle/*
+
+# Ignore generated files
+*.class
+*.war
+*.ear
+*.iml
+
+# Ignore test reports
+**/test-results/
+**/test-output/
+**/reports/
