@@ -46,8 +46,12 @@ public abstract class Zombie implements Runnable {
     public void run() {
         while (isAlive) {
             try {
-                Thread.sleep(speed + 100);
-                if (currentTile != null) {
+                Thread.sleep(speed); // Esperar antes de realizar acciones
+
+                synchronized (currentTile) {
+                    if (!isAlive)
+                        break; // Verificar si el zombi sigue vivo
+
                     Plant plant = currentTile.getPlant();
                     if (plant != null) {
                         // Atacar la planta
@@ -56,19 +60,22 @@ public abstract class Zombie implements Runnable {
                         if (!plant.isAlive()) {
                             currentTile.removePlant();
                         }
-                    } else {
-                        // Mover al siguiente tile
-                        Tile nextTile = currentTile.getPreviousTile(); // Método para obtener el siguiente tile
-                        if (nextTile != null) {
+                        continue; // No moverse si hay una planta en la casilla actual
+                    }
+
+                    // Mover al siguiente tile
+                    Tile nextTile = currentTile.getPreviousTile(); // Obtener el siguiente tile a la izquierda
+                    if (nextTile != null) {
+                        synchronized (nextTile) {
                             currentTile.removeZombie(); // Quitar el zombi de la casilla actual
                             currentTile = nextTile;
                             currentTile.placeZombie(this); // Marcar al zombi en la nueva casilla
-                        } else {
-                            // Si el zombi llega al final, es Game Over
-                            System.out.println("¡Game Over! Un zombi ha llegado al final.");
-                            ThreadManager.stopAllThreads(); // Detener todos los hilos
-                            System.exit(0); // Salir del programa
                         }
+                    } else {
+                        // Si el zombi llega al final, es Game Over
+                        System.out.println("¡Game Over! Un zombi ha llegado al final.");
+                        ThreadManager.stopAllThreads(); // Detener todos los hilos
+                        System.exit(0); // Salir del programa
                     }
                 }
             } catch (InterruptedException e) {

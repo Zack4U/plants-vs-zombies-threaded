@@ -29,8 +29,8 @@ public class ZombieGenerator implements Runnable {
         }
         while (running) {
             try {
-                // Generar un intervalo aleatorio entre 20 y 30 segundos
-                int interval = 20000 + random.nextInt(10000);
+                // Generar un intervalo aleatorio entre 10 y 30 segundos
+                int interval = 10000 + random.nextInt(20000);
                 Thread.sleep(interval);
 
                 // Generar un zombi en una fila aleatoria

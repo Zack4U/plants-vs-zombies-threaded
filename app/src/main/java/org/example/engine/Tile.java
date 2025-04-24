@@ -38,6 +38,14 @@ public class Tile extends JPanel {
         return plant;
     }
 
+    public Plant getNextPlant() {
+        GamePanel gamePanel = (GamePanel) SwingUtilities.getAncestorOfClass(GamePanel.class, this);
+        if (gamePanel != null) {
+            return gamePanel.getTile(row, col + 1).getPlant(); // Obtener la planta de la casilla a la derecha
+        }
+        return null;
+    }
+
     public void placePlant(String plantType, SunCollector sunCollector, int availableSuns) {
         if (plant == null) {
             int plantCost = 0;
